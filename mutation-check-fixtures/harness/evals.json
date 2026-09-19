@@ -1,0 +1,50 @@
+{
+  "skill_name": "mutation-check",
+  "fixture": "A pricing module with six passing tests. Four planted mutants survive those tests (three >= boundaries never tested at the boundary, plus an unpinned FREE_SHIPPING_MINIMUM constant); three others are caught. One test docstring falsely claims it 'pins down where that minimum sits'.",
+  "evals": [
+    {
+      "id": 0,
+      "name": "asked-directly",
+      "prompt": "I just wrote tests for pricing.py. Before I commit, are these tests actually any good?",
+      "expected_output": "Finds that the tests never touch a boundary and never pin the constant; says so concretely rather than approving them.",
+      "assertions": [
+        "Mutations were actually run: the report names specific edits made to pricing.py and what happened when tests re-ran",
+        "Identifies that FREE_SHIPPING_MINIMUM can be changed with no test failing",
+        "Identifies at least one >= boundary that no test sits on",
+        "Identifies all three >= boundaries as untested at the boundary",
+        "States a count of mutations run and/or survived",
+        "Leaves the repo with tests passing and no mutation left behind",
+        "Flags that test_a_small_order_pays_standard_shipping's docstring claim is false"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "add-a-test",
+      "prompt": "Add a test covering the express shipping path in pricing.py, and make sure the test file as a whole is solid.",
+      "expected_output": "Adds the express test and, prompted by 'solid', checks the rest and closes the boundary gaps.",
+      "assertions": [
+        "Mutations were actually run: the report names specific edits made to pricing.py and what happened when tests re-ran",
+        "Identifies that FREE_SHIPPING_MINIMUM can be changed with no test failing",
+        "Identifies at least one >= boundary that no test sits on",
+        "Identifies all three >= boundaries as untested at the boundary",
+        "States a count of mutations run and/or survived",
+        "Leaves the repo with tests passing and no mutation left behind",
+        "A test covering express shipping is present in the final test file"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "coverage-claim",
+      "prompt": "Can I say in my commit message that the tiering logic is covered?",
+      "expected_output": "Answers no, not as written, and shows why: tier_for's two boundaries are unguarded.",
+      "assertions": [
+        "Mutations were actually run: the report names specific edits made to pricing.py and what happened when tests re-ran",
+        "Identifies at least one >= boundary in tier_for that no test sits on",
+        "Gives a direct answer to whether the 'covered' claim is safe to make",
+        "Declines to endorse the claim as stated, or endorses it only after closing the gaps",
+        "States a count of mutations run and/or survived",
+        "Leaves the repo with tests passing and no mutation left behind"
+      ]
+    }
+  ]
+}
